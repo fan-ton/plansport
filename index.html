@@ -10,18 +10,14 @@
       --bg-color: #0f172a;
       --card-bg: #1e293b;
       --card-bg-hover: #334155;
-      
       --text-primary: #f8fafc;
       --text-secondary: #cbd5e1;
       --text-muted: #64748b;
-      
       --accent: #6366f1;
       --accent-hover: #4f46e5;
       --accent-light: rgba(99, 102, 241, 0.2);
-      
       --danger: #f43f5e;
       --danger-light: rgba(244, 63, 94, 0.2);
-      
       --border-color: #334155;
       --radius: 12px;
     }
@@ -39,7 +35,6 @@
       padding: 16px;
       min-height: 100vh;
       line-height: 1.5;
-      overflow-x: hidden;
     }
 
     .app-container {
@@ -68,10 +63,10 @@
     }
 
     .menu-toggle-btn {
-      background: var(--border-color);
+      background: var(--accent);
       border: none;
-      color: var(--text-primary);
-      padding: 8px 12px;
+      color: #ffffff;
+      padding: 8px 14px;
       border-radius: 8px;
       cursor: pointer;
       font-size: 0.9rem;
@@ -79,11 +74,6 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: background 0.2s;
-    }
-
-    .menu-toggle-btn:hover {
-      background: var(--accent);
     }
 
     .logo {
@@ -93,48 +83,43 @@
       font-weight: 800;
       font-size: 1.2rem;
       color: var(--text-primary);
-      letter-spacing: -0.3px;
     }
 
     .logo i {
       color: var(--accent);
     }
 
-    /* Выдвижная боковая панель (Sidebar) */
+    /* Боковая панель */
     .sidebar-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(4px);
-      z-index: 99;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
+      z-index: 999;
+      display: none;
     }
 
     .sidebar-overlay.active {
-      opacity: 1;
-      visibility: visible;
+      display: block;
     }
 
     .sidebar {
       position: fixed;
       top: 0;
-      left: -340px;
-      width: 320px;
+      left: -320px;
+      width: 300px;
       height: 100%;
       background: var(--card-bg);
       border-right: 1px solid var(--border-color);
-      z-index: 100;
+      z-index: 1000;
       padding: 20px;
       display: flex;
       flex-direction: column;
       gap: 20px;
       transition: left 0.3s ease;
-      box-shadow: 5px 0 25px rgba(0,0,0,0.5);
     }
 
     .sidebar.active {
@@ -163,11 +148,7 @@
       cursor: pointer;
     }
 
-    .close-btn:hover {
-      color: var(--text-primary);
-    }
-
-    /* Календарная сетка в Sidebar */
+    /* Сетка календаря */
     .month-title {
       font-weight: 700;
       font-size: 0.95rem;
@@ -203,13 +184,6 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      transition: all 0.15s ease;
-    }
-
-    .cal-date:hover {
-      border-color: var(--accent);
-      background: var(--accent-light);
-      color: #fff;
     }
 
     .cal-date.empty {
@@ -257,7 +231,7 @@
       margin-top: 10px;
     }
 
-    /* Панель фильтров видов спорта */
+    /* Панель фильтров */
     .controls {
       background: var(--card-bg);
       padding: 12px;
@@ -283,12 +257,6 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s ease;
-    }
-
-    .filter-btn:hover {
-      background: var(--card-bg-hover);
-      color: var(--text-primary);
     }
 
     .filter-btn.active {
@@ -316,7 +284,6 @@
       font-size: 0.75rem;
     }
 
-    /* Индикатор выбранного дня */
     .active-date-info {
       display: flex;
       align-items: center;
@@ -343,15 +310,8 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
-    .event-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--accent);
-    }
-
-    /* Баннеры карточек */
     .card-banner {
       height: 90px;
       position: relative;
@@ -382,13 +342,6 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      backdrop-filter: blur(4px);
-      transition: all 0.2s ease;
-    }
-
-    .fav-btn:hover {
-      transform: scale(1.1);
-      background: var(--card-bg);
     }
 
     .fav-btn.is-fav {
@@ -440,11 +393,6 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 0.85rem;
-      transition: background 0.2s ease;
-    }
-
-    .register-btn:hover {
-      background: var(--accent-hover);
     }
 
     .empty-msg {
@@ -459,28 +407,25 @@
 </head>
 <body>
 
-  <!-- Затеменение фона при открытом меню -->
-  <div class="sidebar-overlay" id="overlay"></div>
+  <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
 
-  <!-- Боковое меню с календарем -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-title"><i class="fa-regular fa-calendar-days"></i> Календарь</div>
-      <button class="close-btn" id="close-sidebar"><i class="fa-solid fa-xmark"></i></button>
+      <button class="close-btn" onclick="closeSidebar()"><i class="fa-solid fa-xmark"></i></button>
     </div>
 
     <div>
       <div class="month-title">Август 2026</div>
       <div class="cal-grid" id="calendar-grid"></div>
-      <button class="reset-date-btn" id="reset-date" style="display: none;">Показать все дни</button>
+      <button class="reset-date-btn" id="reset-date" style="display: none;" onclick="clearDateFilter()">Показать все дни</button>
     </div>
   </aside>
 
-  <!-- Основной контент -->
   <div class="app-container">
     <header>
       <div class="header-left">
-        <button class="menu-toggle-btn" id="open-sidebar">
+        <button class="menu-toggle-btn" onclick="openSidebar()">
           <i class="fa-solid fa-bars"></i>
           <span>Календарь</span>
         </button>
@@ -491,7 +436,6 @@
       </div>
     </header>
 
-    <!-- Выбранная дата (если активна) -->
     <div id="date-info-bar" style="display: none;">
       <div class="active-date-info">
         <span>Показаны старты на: <strong id="selected-date-text"></strong></span>
@@ -499,7 +443,6 @@
       </div>
     </div>
 
-    <!-- Фильтры по видам спорта -->
     <div class="controls">
       <div class="filters-row" id="sport-filters">
         <button class="filter-btn active" data-type="all">
@@ -526,7 +469,6 @@
       </div>
     </div>
 
-    <!-- Список соревнований -->
     <main id="events-container">
       <div class="events-grid" id="events-grid"></div>
     </main>
@@ -554,45 +496,20 @@
       other: 'fa-trophy'
     };
 
-    function init() {
-      setupSidebar();
-      updateFavBadge();
-      renderCalendarGrid();
-      renderEvents();
+    function openSidebar() {
+      document.getElementById('sidebar').classList.add('active');
+      document.getElementById('overlay').classList.add('active');
     }
 
-    // Управление боковой панелью
-    function setupSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
-      const openBtn = document.getElementById('open-sidebar');
-      const closeBtn = document.getElementById('close-sidebar');
-
-      function openSidebar() {
-        sidebar.classList.add('active');
-        overlay.classList.add('active');
-      }
-
-      function closeSidebar() {
-        sidebar.classList.remove('active');
-        overlay.classList.remove('active');
-      }
-
-      openBtn.addEventListener('click', openSidebar);
-      closeBtn.addEventListener('click', closeSidebar);
-      overlay.addEventListener('click', closeSidebar);
-
-      // Жест свайпа слева направо для открытия на смартфонах
-      let touchStartX = 0;
-      document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
-      document.addEventListener('touchend', e => {
-        if (touchStartX < 30 && e.changedTouches[0].clientX > 80) openSidebar();
-      });
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('overlay').classList.remove('active');
     }
 
-    // Сетка календаря
     function renderCalendarGrid() {
       const grid = document.getElementById('calendar-grid');
+      if (!grid) return;
+
       const daysNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
       let html = daysNames.map(d => `<div class="cal-day-name">${d}</div>`).join('');
 
@@ -630,10 +547,7 @@
         document.getElementById('selected-date-text').textContent = dateStr.split('-').reverse().join('.');
       }
       
-      // Закрываем панель после выбора даты
-      document.getElementById('sidebar').classList.remove('active');
-      document.getElementById('overlay').classList.remove('active');
-
+      closeSidebar();
       renderCalendarGrid();
       renderEvents();
     }
@@ -645,8 +559,6 @@
       renderCalendarGrid();
       renderEvents();
     }
-
-    document.getElementById('reset-date').addEventListener('click', clearDateFilter);
 
     function toggleFavorite(id) {
       if (favorites.includes(id)) {
@@ -660,11 +572,14 @@
     }
 
     function updateFavBadge() {
-      document.getElementById('fav-count').textContent = favorites.length;
+      const el = document.getElementById('fav-count');
+      if (el) el.textContent = favorites.length;
     }
 
     function renderEvents() {
       const container = document.getElementById('events-grid');
+      if (!container) return;
+
       let filtered = [...eventsData];
 
       if (currentFilter === 'favorites') {
@@ -716,13 +631,22 @@
       }).join('');
     }
 
-    document.getElementById('sport-filters').addEventListener('click', (e) => {
-      const btn = e.target.closest('.filter-btn');
-      if (!btn) return;
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('sport-filters').addEventListener('click', (e) => {
+        const btn = e.target.closest('.filter-btn');
+        if (!btn) return;
 
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-      currentFilter = btn.dataset.type;
+        currentFilter = btn.dataset.type;
+        renderEvents();
+      });
+
+      updateFavBadge();
+      renderCalendarGrid();
       renderEvents();
-    }
+    });
+  </script>
+</body>
+</html>
