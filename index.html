@@ -45,7 +45,6 @@
       gap: 16px;
     }
 
-    /* Шапка сайта */
     header {
       background: var(--card-bg);
       padding: 14px 20px;
@@ -85,11 +84,9 @@
       color: var(--text-primary);
     }
 
-    .logo i {
-      color: var(--accent);
-    }
+    .logo i { color: var(--accent); }
 
-    /* Боковая панель */
+    /* Выдвижной календарь */
     .sidebar-overlay {
       position: fixed;
       top: 0;
@@ -102,15 +99,13 @@
       display: none;
     }
 
-    .sidebar-overlay.active {
-      display: block;
-    }
+    .sidebar-overlay.active { display: block; }
 
     .sidebar {
       position: fixed;
       top: 0;
-      left: -320px;
-      width: 300px;
+      left: -330px;
+      width: 310px;
       height: 100%;
       background: var(--card-bg);
       border-right: 1px solid var(--border-color);
@@ -118,13 +113,12 @@
       padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
       transition: left 0.3s ease;
+      overflow-y: auto;
     }
 
-    .sidebar.active {
-      left: 0;
-    }
+    .sidebar.active { left: 0; }
 
     .sidebar-header {
       display: flex;
@@ -134,11 +128,7 @@
       padding-bottom: 12px;
     }
 
-    .sidebar-title {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--text-primary);
-    }
+    .sidebar-title { font-weight: 700; font-size: 1.1rem; }
 
     .close-btn {
       background: transparent;
@@ -148,13 +138,25 @@
       cursor: pointer;
     }
 
-    /* Сетка календаря */
-    .month-title {
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--text-secondary);
+    /* Навигация по месяцам */
+    .month-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-bottom: 10px;
     }
+
+    .month-nav-btn {
+      background: var(--border-color);
+      border: none;
+      color: var(--text-primary);
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .month-title { font-weight: 700; font-size: 0.95rem; color: var(--text-secondary); }
 
     .cal-grid {
       display: grid;
@@ -186,37 +188,13 @@
       justify-content: space-between;
     }
 
-    .cal-date.empty {
-      background: transparent;
-      cursor: default;
-    }
+    .cal-date.empty { background: transparent; cursor: default; }
+    .cal-date.has-events { border-color: var(--border-color); color: #fff; }
+    .cal-date.selected { background: var(--accent) !important; color: #ffffff !important; }
 
-    .cal-date.has-events {
-      border-color: var(--border-color);
-      color: #fff;
-    }
-
-    .cal-date.selected {
-      background: var(--accent) !important;
-      color: #ffffff !important;
-    }
-
-    .event-dots {
-      display: flex;
-      gap: 2px;
-      margin-top: 2px;
-    }
-
-    .event-dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background-color: var(--accent);
-    }
-
-    .cal-date.selected .event-dot {
-      background-color: #ffffff;
-    }
+    .event-dots { display: flex; gap: 2px; margin-top: 2px; }
+    .event-dot { width: 4px; height: 4px; border-radius: 50%; background-color: var(--accent); }
+    .cal-date.selected .event-dot { background-color: #ffffff; }
 
     .reset-date-btn {
       width: 100%;
@@ -228,10 +206,9 @@
       cursor: pointer;
       font-weight: 600;
       font-size: 0.85rem;
-      margin-top: 10px;
     }
 
-    /* Панель фильтров */
+    /* Фильтры */
     .controls {
       background: var(--card-bg);
       padding: 12px;
@@ -239,11 +216,7 @@
       border: 1px solid var(--border-color);
     }
 
-    .filters-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+    .filters-row { display: flex; flex-wrap: wrap; gap: 8px; }
 
     .filter-btn {
       background: #0f172a;
@@ -259,30 +232,11 @@
       gap: 6px;
     }
 
-    .filter-btn.active {
-      background: var(--accent);
-      color: #ffffff;
-      border-color: var(--accent);
-    }
+    .filter-btn.active { background: var(--accent); color: #ffffff; border-color: var(--accent); }
+    .filter-btn.favorites-tab { margin-left: auto; color: var(--danger); background: var(--danger-light); border-color: transparent; }
+    .filter-btn.favorites-tab.active { background: var(--danger); color: #ffffff; }
 
-    .filter-btn.favorites-tab {
-      margin-left: auto;
-      color: var(--danger);
-      background: var(--danger-light);
-      border-color: transparent;
-    }
-
-    .filter-btn.favorites-tab.active {
-      background: var(--danger);
-      color: #ffffff;
-    }
-
-    .badge {
-      background: rgba(255, 255, 255, 0.2);
-      padding: 2px 6px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-    }
+    .badge { background: rgba(255, 255, 255, 0.2); padding: 2px 6px; border-radius: 6px; font-size: 0.75rem; }
 
     .active-date-info {
       display: flex;
@@ -293,10 +247,9 @@
       padding: 8px 14px;
       border-radius: 8px;
       font-size: 0.88rem;
-      color: var(--text-primary);
     }
 
-    /* Сетка карточек */
+    /* Карточки */
     .events-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -344,9 +297,7 @@
       cursor: pointer;
     }
 
-    .fav-btn.is-fav {
-      color: var(--danger);
-    }
+    .fav-btn.is-fav { color: var(--danger); }
 
     .card-body {
       padding: 14px;
@@ -357,6 +308,12 @@
       gap: 12px;
     }
 
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
     .event-date-badge {
       background: var(--accent-light);
       color: #818cf8;
@@ -364,7 +321,12 @@
       font-size: 0.8rem;
       padding: 3px 8px;
       border-radius: 6px;
-      display: inline-block;
+    }
+
+    .event-source {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
     }
 
     .event-title {
@@ -416,9 +378,13 @@
     </div>
 
     <div>
-      <div class="month-title">Август 2026</div>
+      <div class="month-nav">
+        <button class="month-nav-btn" onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="month-title" id="month-title">Август 2026</div>
+        <button class="month-nav-btn" onclick="changeMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
       <div class="cal-grid" id="calendar-grid"></div>
-      <button class="reset-date-btn" id="reset-date" style="display: none;" onclick="clearDateFilter()">Показать все дни</button>
+      <button class="reset-date-btn" id="reset-date" style="display: none; margin-top: 12px;" onclick="clearDateFilter()">Показать все дни</button>
     </div>
   </aside>
 
@@ -445,27 +411,13 @@
 
     <div class="controls">
       <div class="filters-row" id="sport-filters">
-        <button class="filter-btn active" data-type="all">
-          <i class="fa-solid fa-border-all"></i> Все
-        </button>
-        <button class="filter-btn" data-type="run">
-          <i class="fa-solid fa-person-running"></i> Бег / Трейл
-        </button>
-        <button class="filter-btn" data-type="ski">
-          <i class="fa-solid fa-person-skiing"></i> Лыжи
-        </button>
-        <button class="filter-btn" data-type="swim">
-          <i class="fa-solid fa-person-swimming"></i> Плавание
-        </button>
-        <button class="filter-btn" data-type="bike">
-          <i class="fa-solid fa-person-biking"></i> Вело
-        </button>
-        <button class="filter-btn" data-type="other">
-          <i class="fa-solid fa-trophy"></i> Другое
-        </button>
-        <button class="filter-btn favorites-tab" data-type="favorites">
-          <i class="fa-solid fa-heart"></i> Избранное <span class="badge" id="fav-count">0</span>
-        </button>
+        <button class="filter-btn active" data-type="all"><i class="fa-solid fa-border-all"></i> Все</button>
+        <button class="filter-btn" data-type="run"><i class="fa-solid fa-person-running"></i> Бег / Трейл</button>
+        <button class="filter-btn" data-type="ski"><i class="fa-solid fa-person-skiing"></i> Лыжи</button>
+        <button class="filter-btn" data-type="swim"><i class="fa-solid fa-person-swimming"></i> Плавание</button>
+        <button class="filter-btn" data-type="bike"><i class="fa-solid fa-person-biking"></i> Вело</button>
+        <button class="filter-btn" data-type="other"><i class="fa-solid fa-trophy"></i> Другое</button>
+        <button class="filter-btn favorites-tab" data-type="favorites"><i class="fa-solid fa-heart"></i> Избранное <span class="badge" id="fav-count">0</span></button>
       </div>
     </div>
 
@@ -475,18 +427,35 @@
   </div>
 
   <script>
+    // Объединенная база стартов O-Time и Russia Running на несколько месяцев
     const eventsData = [
-      { id: 'ev1', title: "Марафон «Европа-Азия»", date: "2026-08-15", location: "Екатеринбург", type: "run", link: "https://reg.o-time.ru/calendar" },
-      { id: 'ev2', title: "Лесной трейл «Небо Славян»", date: "2026-08-20", location: "Ленинградская обл.", type: "run", link: "https://reg.o-time.ru/calendar" },
-      { id: 'ev3', title: "Ночной забег O-Time", date: "2026-08-20", location: "Санкт-Петербург", type: "run", link: "https://reg.o-time.ru/calendar" },
-      { id: 'ev4', title: "Открытый заплыв Lake Swim", date: "2026-08-23", location: "Озеро Хепоярви", type: "swim", link: "https://reg.o-time.ru/calendar" },
-      { id: 'ev5', title: "Шоссейная велогонка Gran Fondo", date: "2026-08-28", location: "Москва", type: "bike", link: "https://reg.o-time.ru/calendar" },
-      { id: 'ev6', title: "Лыжероллерный спринт", date: "2026-08-30", location: "Кавголово", type: "ski", link: "https://reg.o-time.ru/calendar" }
+      // Август 2026
+      { id: 'ev1', title: "Марафон «Европа-Азия»", date: "2026-08-15", location: "Екатеринбург", type: "run", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
+      { id: 'ev2', title: "Лесной трейл «Небо Славян»", date: "2026-08-20", location: "Ленинградская обл.", type: "run", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
+      { id: 'ev3', title: "Ночной забег O-Time", date: "2026-08-20", location: "Санкт-Петербург", type: "run", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
+      { id: 'ev4', title: "Полумарафон «Лужники»", date: "2026-08-23", location: "Москва", type: "run", source: "Russia Running", link: "https://russiarunning.com" },
+      { id: 'ev5', title: "Открытый заплыв Lake Swim", date: "2026-08-23", location: "Озеро Хепоярви", type: "swim", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
+      { id: 'ev6', title: "Шоссейная велогонка Gran Fondo", date: "2026-08-28", location: "Москва", type: "bike", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
+      { id: 'ev7', title: "Лыжероллерный спринт", date: "2026-08-30", location: "Кавголово", type: "ski", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
+
+      // Сентябрь 2026
+      { id: 'ev8', title: "Московский Марафон", date: "2026-09-06", location: "Москва", type: "run", source: "Russia Running", link: "https://russiarunning.com" },
+      { id: 'ev9', title: "Павловский полумарафон", date: "2026-09-13", location: "Санкт-Петербург", type: "run", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
+      { id: 'ev10', title: "Заплыв Swimcup Volga", date: "2026-09-20", location: "Нижний Новгород", type: "swim", source: "Russia Running", link: "https://russiarunning.com" },
+
+      // Октябрь 2026
+      { id: 'ev11', title: "Осенний трейл «Северная Тропа»", date: "2026-10-04", location: "Токсово", type: "run", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
+      { id: 'ev12', title: "Кросс Наций", date: "2026-10-11", location: "Сочи", type: "run", source: "Russia Running", link: "https://russiarunning.com" }
     ];
 
     let favorites = JSON.parse(localStorage.getItem('otime_favs') || '[]');
     let currentFilter = 'all';
     let selectedDate = null;
+
+    let currentCalMonth = 7; // Август (0-index)
+    let currentCalYear = 2026;
+
+    const monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
 
     const icons = {
       run: 'fa-person-running',
@@ -506,26 +475,47 @@
       document.getElementById('overlay').classList.remove('active');
     }
 
+    function changeMonth(delta) {
+      currentCalMonth += delta;
+      if (currentCalMonth > 11) {
+        currentCalMonth = 0;
+        currentCalYear++;
+      } else if (currentCalMonth < 0) {
+        currentCalMonth = 11;
+        currentCalYear--;
+      }
+      renderCalendarGrid();
+    }
+
     function renderCalendarGrid() {
       const grid = document.getElementById('calendar-grid');
+      const titleEl = document.getElementById('month-title');
       if (!grid) return;
+
+      titleEl.textContent = `${monthNames[currentCalMonth]} ${currentCalYear}`;
 
       const daysNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
       let html = daysNames.map(d => `<div class="cal-day-name">${d}</div>`).join('');
 
-      for (let i = 0; i < 5; i++) {
+      const firstDay = new Date(currentCalYear, currentCalMonth, 1).getDay();
+      const emptySlots = (firstDay === 0 ? 6 : firstDay - 1);
+      const daysInMonth = new Date(currentCalYear, currentCalMonth + 1, 0).getDate();
+
+      for (let i = 0; i < emptySlots; i++) {
         html += `<div class="cal-date empty"></div>`;
       }
 
-      for (let day = 1; day <= 31; day++) {
-        const dateStr = `2026-08-${day < 10 ? '0' + day : day}`;
+      for (let day = 1; day <= daysInMonth; day++) {
+        const mStr = (currentCalMonth + 1) < 10 ? '0' + (currentCalMonth + 1) : (currentCalMonth + 1);
+        const dStr = day < 10 ? '0' + day : day;
+        const dateStr = `${currentCalYear}-${mStr}-${dStr}`;
+
         const dayEvents = eventsData.filter(e => e.date === dateStr);
         const hasEvents = dayEvents.length > 0;
         const isSelected = selectedDate === dateStr;
 
         html += `
-          <div class="cal-date ${hasEvents ? 'has-events' : ''} ${isSelected ? 'selected' : ''}" 
-               onclick="selectDate('${dateStr}')">
+          <div class="cal-date ${hasEvents ? 'has-events' : ''} ${isSelected ? 'selected' : ''}" onclick="selectDate('${dateStr}')">
             <span>${day}</span>
             <div class="event-dots">
               ${dayEvents.map(() => `<div class="event-dot"></div>`).join('')}
@@ -546,7 +536,6 @@
         document.getElementById('date-info-bar').style.display = 'block';
         document.getElementById('selected-date-text').textContent = dateStr.split('-').reverse().join('.');
       }
-      
       closeSidebar();
       renderCalendarGrid();
       renderEvents();
@@ -618,7 +607,10 @@
             </div>
             <div class="card-body">
               <div>
-                <span class="event-date-badge">${formattedDate}</span>
+                <div class="card-meta">
+                  <span class="event-date-badge">${formattedDate}</span>
+                  <span class="event-source">${event.source}</span>
+                </div>
                 <div class="event-title">${event.title}</div>
               </div>
               <div class="event-location">
@@ -631,22 +623,4 @@
       }).join('');
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('sport-filters').addEventListener('click', (e) => {
-        const btn = e.target.closest('.filter-btn');
-        if (!btn) return;
-
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        currentFilter = btn.dataset.type;
-        renderEvents();
-      });
-
-      updateFavBadge();
-      renderCalendarGrid();
-      renderEvents();
-    });
-  </script>
-</body>
-</html>
+    document.addEventListener('DOMContentLoaded',
