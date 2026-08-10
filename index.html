@@ -7,184 +7,282 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg-color: #f1f5f9;
+      --bg-color: #f8fafc;
       --card-bg: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --brand-blue: #1a56db;
-      --brand-blue-hover: #1e40af;
-      --brand-red: #e11d48;
-      --brand-red-hover: #be123c;
-      --border-color: #cbd5e1;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      
+      --accent: #4f46e5;
+      --accent-hover: #4338ca;
+      --accent-light: #eef2ff;
+      
+      --danger: #f43f5e;
+      --danger-light: #ffe4e6;
+      
+      --border-color: #e2e8f0;
+      --radius: 12px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     }
 
     body {
       background-color: var(--bg-color);
-      color: var(--text-main);
+      color: var(--text-primary);
       padding: 16px;
       min-height: 100vh;
+      line-height: 1.5;
     }
 
-    header {
-      max-width: 1200px;
-      margin: 0 auto 20px auto;
+    .app-container {
+      max-width: 1100px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 20px;
     }
 
-    .header-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    /* Шапка сайта */
+    header {
       background: var(--card-bg);
       padding: 16px 20px;
-      border-radius: 12px;
+      border-radius: var(--radius);
       border: 1px solid var(--border-color);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .header-title i {
-      color: var(--brand-red);
-      font-size: 2rem;
-    }
-
-    h1 {
-      font-size: 1.5rem;
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       font-weight: 800;
-      letter-spacing: -0.3px;
-      color: var(--brand-blue);
-      text-transform: uppercase;
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
     }
 
-    /* Навигация и фильтры O-Time (Синий + Красный) */
-    .filters {
+    .logo i {
+      color: var(--accent);
+      font-size: 1.5rem;
+    }
+
+    /* Панель управления и фильтры */
+    .controls {
+      background: var(--card-bg);
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .filters-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      background-color: var(--card-bg);
-      padding: 10px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
     }
 
     .filter-btn {
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
+      background: #f1f5f9;
+      border: 1px solid transparent;
+      color: var(--text-secondary);
       padding: 8px 14px;
       border-radius: 8px;
       cursor: pointer;
       font-weight: 600;
-      font-size: 0.88rem;
-      display: flex;
+      font-size: 0.85rem;
+      display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.15s ease;
+      transition: all 0.2s ease;
     }
 
     .filter-btn:hover {
-      color: var(--brand-blue);
-      border-color: var(--brand-blue);
+      background: #e2e8f0;
+      color: var(--text-primary);
     }
 
     .filter-btn.active {
-      background-color: var(--brand-blue);
+      background: var(--accent);
       color: #ffffff;
-      border-color: var(--brand-blue);
     }
 
     .filter-btn.favorites-tab {
       margin-left: auto;
-      border-color: #fca5a5;
-      color: var(--brand-red);
-      background: #fff1f2;
+      color: var(--danger);
+      background: var(--danger-light);
     }
 
     .filter-btn.favorites-tab.active {
-      background-color: var(--brand-red);
+      background: var(--danger);
       color: #ffffff;
-      border-color: var(--brand-red);
     }
 
-    .fav-badge {
-      background: rgba(0, 0, 0, 0.15);
-      padding: 2px 7px;
-      border-radius: 10px;
+    .badge {
+      background: rgba(0,0,0,0.1);
+      padding: 2px 6px;
+      border-radius: 6px;
       font-size: 0.75rem;
     }
 
-    .calendar-container {
-      max-width: 1200px;
-      margin: 0 auto;
+    /* Виджет сетки календаря */
+    .calendar-widget {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
     }
 
+    .calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .month-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      text-align: center;
+    }
+
+    .cal-day-name {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      padding: 6px 0;
+    }
+
+    .cal-date {
+      aspect-ratio: 1;
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .cal-date:hover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .cal-date.empty {
+      background: transparent;
+      cursor: default;
+    }
+
+    .cal-date.has-events {
+      background: #ffffff;
+      border-color: var(--border-color);
+    }
+
+    .cal-date.selected {
+      background: var(--accent) !important;
+      color: #ffffff !important;
+    }
+
+    .event-dots {
+      display: flex;
+      gap: 2px;
+      margin-top: 2px;
+    }
+
+    .event-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: var(--accent);
+    }
+
+    .cal-date.selected .event-dot {
+      background-color: #ffffff;
+    }
+
+    /* Сетка карточек */
     .events-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 16px;
     }
 
+    /* Стильная карточка соревнований */
     .event-card {
-      background-color: var(--card-bg);
+      background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
+      border-radius: var(--radius);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
     }
 
     .event-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-      border-color: var(--brand-blue);
+      box-shadow: var(--shadow-md);
     }
 
-    /* Надежный контейнер изображений */
-    .event-image-wrapper {
+    /* Векторная заглушка баннера */
+    .card-banner {
+      height: 90px;
       position: relative;
-      width: 100%;
-      height: 125px;
-      background-color: #e2e8f0;
-      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 2.2rem;
     }
 
-    .event-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+    .banner-run { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+    .banner-ski { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+    .banner-swim { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+    .banner-bike { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .banner-other { background: linear-gradient(135deg, #64748b, #475569); }
 
-    /* Кнопка "Сердечко" Избранное */
     .fav-btn {
       position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid #e2e8f0;
-      color: #94a3b8;
-      width: 34px;
-      height: 34px;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
       transition: all 0.2s ease;
-      z-index: 2;
     }
 
     .fav-btn:hover {
@@ -193,147 +291,152 @@
     }
 
     .fav-btn.is-fav {
-      color: var(--brand-red);
-      background: #ffffff;
+      color: var(--danger);
     }
 
-    .event-content {
+    .card-body {
       padding: 14px;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
       justify-content: space-between;
+      gap: 12px;
     }
 
-    .event-header {
+    .card-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      justify-content: space-between;
     }
 
-    .event-date {
-      background: #eff6ff;
-      color: var(--brand-blue);
-      border: 1px solid #bfdbfe;
+    .event-date-badge {
+      background: var(--accent-light);
+      color: var(--accent);
       font-weight: 700;
       font-size: 0.8rem;
       padding: 3px 8px;
       border-radius: 6px;
     }
 
-    .event-type-icon {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-    }
-
     .event-title {
       font-size: 0.98rem;
       font-weight: 700;
+      color: var(--text-primary);
       line-height: 1.35;
-      margin-bottom: 8px;
-      color: var(--text-main);
     }
 
     .event-location {
       font-size: 0.82rem;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       display: flex;
       align-items: center;
-      gap: 5px;
-      margin-bottom: 14px;
+      gap: 6px;
     }
 
-    /* Фирменная красная кнопка O-Time */
-    .event-link {
+    .register-btn {
       display: block;
       text-align: center;
-      background-color: var(--brand-red);
+      background: var(--accent);
       color: #ffffff;
-      padding: 9px 12px;
-      border-radius: 6px;
+      padding: 8px 12px;
+      border-radius: 8px;
       text-decoration: none;
-      font-weight: 700;
+      font-weight: 600;
       font-size: 0.85rem;
-      transition: background-color 0.2s ease;
+      transition: background 0.2s ease;
     }
 
-    .event-link:hover {
-      background-color: var(--brand-red-hover);
+    .register-btn:hover {
+      background: var(--accent-hover);
     }
 
-    .status-msg {
+    .empty-msg {
       text-align: center;
-      padding: 40px;
-      color: var(--text-muted);
+      padding: 30px;
       background: var(--card-bg);
-      border-radius: 12px;
+      border-radius: var(--radius);
       border: 1px solid var(--border-color);
-      font-size: 1rem;
+      color: var(--text-secondary);
+    }
+
+    .reset-date-btn {
+      background: transparent;
+      border: none;
+      color: var(--accent);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.8rem;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="header-title">
-      <i class="fa-solid fa-stopwatch"></i>
-      <h1>Календарь O-Time</h1>
+  <div class="app-container">
+    <header>
+      <div class="logo">
+        <i class="fa-solid fa-stopwatch"></i>
+        <span>O-TIME CALENDAR</span>
+      </div>
+    </header>
+
+    <!-- Фильтры по видам спорта -->
+    <div class="controls">
+      <div class="filters-row" id="sport-filters">
+        <button class="filter-btn active" data-type="all">
+          <i class="fa-solid fa-border-all"></i> Все
+        </button>
+        <button class="filter-btn" data-type="run">
+          <i class="fa-solid fa-person-running"></i> Бег / Трейл
+        </button>
+        <button class="filter-btn" data-type="ski">
+          <i class="fa-solid fa-person-skiing"></i> Лыжи
+        </button>
+        <button class="filter-btn" data-type="swim">
+          <i class="fa-solid fa-person-swimming"></i> Плавание
+        </button>
+        <button class="filter-btn" data-type="bike">
+          <i class="fa-solid fa-person-biking"></i> Вело
+        </button>
+        <button class="filter-btn" data-type="other">
+          <i class="fa-solid fa-trophy"></i> Другое
+        </button>
+        <button class="filter-btn favorites-tab" data-type="favorites">
+          <i class="fa-solid fa-heart"></i> Избранное <span class="badge" id="fav-count">0</span>
+        </button>
+      </div>
     </div>
 
-    <div class="filters" id="filters">
-      <button class="filter-btn active" data-type="all">
-        <i class="fa-solid fa-list"></i> Все
-      </button>
-      <button class="filter-btn" data-type="run">
-        <i class="fa-solid fa-person-running"></i> Бег / Трейл
-      </button>
-      <button class="filter-btn" data-type="ski">
-        <i class="fa-solid fa-person-skiing"></i> Лыжи
-      </button>
-      <button class="filter-btn" data-type="swim">
-        <i class="fa-solid fa-person-swimming"></i> Плавание
-      </button>
-      <button class="filter-btn" data-type="bike">
-        <i class="fa-solid fa-person-biking"></i> Вело
-      </button>
-      <button class="filter-btn" data-type="other">
-        <i class="fa-solid fa-trophy"></i> Другое
-      </button>
-      <button class="filter-btn favorites-tab" data-type="favorites">
-        <i class="fa-solid fa-heart"></i> Избранное <span class="fav-badge" id="fav-count">0</span>
-      </button>
+    <!-- Календарь на месяц -->
+    <div class="calendar-widget">
+      <div class="calendar-header">
+        <span class="month-title" id="month-name">Август 2026</span>
+        <button class="reset-date-btn" id="reset-date" style="display: none;">Показать все даты</button>
+      </div>
+      <div class="cal-grid" id="calendar-grid"></div>
     </div>
-  </header>
 
-  <main class="calendar-container" id="calendar">
-    <div class="status-msg" id="status">Загрузка соревнований...</div>
-  </main>
+    <!-- Список соревнований -->
+    <main id="events-container">
+      <div class="events-grid" id="events-grid"></div>
+    </main>
+  </div>
 
   <script>
-    // Быстрые картинки
-    const typeImages = {
-      run: 'https://picsum.photos/id/73/500/250',
-      ski: 'https://picsum.photos/id/1036/500/250',
-      swim: 'https://picsum.photos/id/124/500/250',
-      bike: 'https://picsum.photos/id/146/500/250',
-      other: 'https://picsum.photos/id/1058/500/250'
-    };
-
-    const mockEvents = [
-      { id: 'otime_1', title: "Марафон «Европа-Азия»", date: "15.08.2026", location: "Екатеринбург", type: "run", link: "https://reg.o-time.ru/calendar" },
-      { id: 'otime_2', title: "Лесной трейл «Небо Славян»", date: "20.08.2026", location: "Ленинградская обл.", type: "run", link: "https://reg.o-time.ru/calendar" },
-      { id: 'otime_3', title: "Ночной забег O-Time", date: "22.08.2026", location: "Санкт-Петербург", type: "run", link: "https://reg.o-time.ru/calendar" },
-      { id: 'otime_4', title: "Открытый заплыв Lake Swim", date: "29.08.2026", location: "Карелия", type: "swim", link: "https://reg.o-time.ru/calendar" },
-      { id: 'otime_5', title: "Шоссейная велогонка Gran Fondo", date: "05.09.2026", location: "Москва", type: "bike", link: "https://reg.o-time.ru/calendar" },
-      { id: 'otime_6', title: "Лыжероллерный спринт", date: "12.09.2026", location: "Кавголово", type: "ski", link: "https://reg.o-time.ru/calendar" }
+    // База соревнований (мгновенная загрузка)
+    const eventsData = [
+      { id: 'ev1', title: "Марафон «Европа-Азия»", date: "2026-08-15", location: "Екатеринбург", type: "run", link: "https://reg.o-time.ru/calendar" },
+      { id: 'ev2', title: "Лесной трейл «Небо Славян»", date: "2026-08-20", location: "Ленинградская обл.", type: "run", link: "https://reg.o-time.ru/calendar" },
+      { id: 'ev3', title: "Ночной забег O-Time", date: "2026-08-20", location: "Санкт-Петербург", type: "run", link: "https://reg.o-time.ru/calendar" },
+      { id: 'ev4', title: "Открытый заплыв Lake Swim", date: "2026-08-23", location: "Озеро Хепоярви", type: "swim", link: "https://reg.o-time.ru/calendar" },
+      { id: 'ev5', title: "Шоссейная велогонка Gran Fondo", date: "2026-08-28", location: "Москва", type: "bike", link: "https://reg.o-time.ru/calendar" },
+      { id: 'ev6', title: "Лыжероллерный спринт", date: "2026-08-30", location: "Кавголово", type: "ski", link: "https://reg.o-time.ru/calendar" }
     ];
 
-    let allEvents = [];
     let favorites = JSON.parse(localStorage.getItem('otime_favs') || '[]');
     let currentFilter = 'all';
+    let selectedDate = null;
 
-    const sportsIcons = {
+    const icons = {
       run: 'fa-person-running',
       ski: 'fa-person-skiing',
       swim: 'fa-person-swimming',
@@ -341,71 +444,62 @@
       other: 'fa-trophy'
     };
 
-    function parseEventDate(dateStr) {
-      if (!dateStr || dateStr === 'Скоро') return new Date(2099, 11, 31);
-      const parts = dateStr.split('.');
-      if (parts.length === 3) {
-        return new Date(parts[2], parts[1] - 1, parts[0]);
-      }
-      return new Date(dateStr);
-    }
-
-    async function fetchCalendarEvents() {
-      const targetUrl = 'https://reg.o-time.ru/calendar';
-      const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
-
-      // Быстрый таймаут 2.5с на случай задержек прокси
-      const fetchPromise = fetch(proxyUrl).then(res => res.json());
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Таймаут сетевого запроса')), 2500)
-      );
-
-      try {
-        const data = await Promise.race([fetchPromise, timeoutPromise]);
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(data.contents, 'text/html');
-        const eventRows = doc.querySelectorAll('table tr, .event-row, .calendar-item');
-        const parsedEvents = [];
-
-        eventRows.forEach((row, idx) => {
-          const titleEl = row.querySelector('a');
-          const textContent = row.textContent.trim();
-          
-          if (titleEl && textContent.length > 10) {
-            let type = 'other';
-            const lowerText = textContent.toLowerCase();
-            if (lowerText.includes('бег') || lowerText.includes('трейл') || lowerText.includes('марафон') || lowerText.includes('кросс')) type = 'run';
-            else if (lowerText.includes('лыж')) type = 'ski';
-            else if (lowerText.includes('плава') || lowerText.includes('swim') || lowerText.includes('триатлон')) type = 'swim';
-            else if (lowerText.includes('вело') || lowerText.includes('bike')) type = 'bike';
-
-            const extractedDate = extractDate(textContent) || '15.08.2026';
-
-            parsedEvents.push({
-              id: `otime_live_${idx}`,
-              title: titleEl.textContent.trim(),
-              link: titleEl.getAttribute('href')?.startsWith('http') ? titleEl.getAttribute('href') : `https://reg.o-time.ru/${titleEl.getAttribute('href')}`,
-              date: extractedDate,
-              location: 'СЗФО / Россия',
-              type: type
-            });
-          }
-        });
-
-        allEvents = parsedEvents.length > 0 ? parsedEvents : mockEvents;
-      } catch (err) {
-        // Мгновенный фоллбэк при зависании
-        allEvents = mockEvents;
-      }
-
+    function init() {
       updateFavBadge();
-      renderCalendar();
+      renderCalendarGrid();
+      renderEvents();
     }
 
-    function extractDate(text) {
-      const match = text.match(/\d{2}\.\d{2}\.\d{4}/);
-      return match ? match[0] : null;
+    // Рендер сетки календаря
+    function renderCalendarGrid() {
+      const grid = document.getElementById('calendar-grid');
+      const daysNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+      
+      let html = daysNames.map(d => `<div class="cal-day-name">${d}</div>`).join('');
+
+      // Август 2026 начинается с субботы (5 пустых ячеек)
+      for (let i = 0; i < 5; i++) {
+        html += `<div class="cal-date empty"></div>`;
+      }
+
+      for (let day = 1; day <= 31; day++) {
+        const dateStr = `2026-08-${day < 10 ? '0' + day : day}`;
+        const dayEvents = eventsData.filter(e => e.date === dateStr);
+        const hasEvents = dayEvents.length > 0;
+        const isSelected = selectedDate === dateStr;
+
+        html += `
+          <div class="cal-date ${hasEvents ? 'has-events' : ''} ${isSelected ? 'selected' : ''}" 
+               onclick="selectDate('${dateStr}')">
+            <span>${day}</span>
+            <div class="event-dots">
+              ${dayEvents.map(() => `<div class="event-dot"></div>`).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      grid.innerHTML = html;
     }
+
+    function selectDate(dateStr) {
+      if (selectedDate === dateStr) {
+        selectedDate = null;
+        document.getElementById('reset-date').style.display = 'none';
+      } else {
+        selectedDate = dateStr;
+        document.getElementById('reset-date').style.display = 'inline-block';
+      }
+      renderCalendarGrid();
+      renderEvents();
+    }
+
+    document.getElementById('reset-date').addEventListener('click', () => {
+      selectedDate = null;
+      document.getElementById('reset-date').style.display = 'none';
+      renderCalendarGrid();
+      renderEvents();
+    });
 
     function toggleFavorite(id) {
       if (favorites.includes(id)) {
@@ -415,69 +509,73 @@
       }
       localStorage.setItem('otime_favs', JSON.stringify(favorites));
       updateFavBadge();
-      renderCalendar();
+      renderEvents();
     }
 
     function updateFavBadge() {
       document.getElementById('fav-count').textContent = favorites.length;
     }
 
-    function renderCalendar() {
-      const calendarEl = document.getElementById('calendar');
-      let filtered = [];
+    function renderEvents() {
+      const container = document.getElementById('events-grid');
+      let filtered = [...eventsData];
 
+      // Фильтр по спорту / избранному
       if (currentFilter === 'favorites') {
-        filtered = allEvents
-          .filter(e => favorites.includes(e.id))
-          .sort((a, b) => parseEventDate(a.date) - parseEventDate(b.date));
-      } else if (currentFilter === 'all') {
-        filtered = [...allEvents];
-      } else {
-        filtered = allEvents.filter(e => e.type === currentFilter);
+        filtered = filtered.filter(e => favorites.includes(e.id));
+      } else if (currentFilter !== 'all') {
+        filtered = filtered.filter(e => e.type === currentFilter);
       }
 
+      // Фильтр по выбранной в календаре дате
+      if (selectedDate) {
+        filtered = filtered.filter(e => e.date === selectedDate);
+      }
+
+      // Сортировка по дате
+      filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+
       if (filtered.length === 0) {
-        const emptyMsg = currentFilter === 'favorites' 
-          ? 'Список избранных стартов пуст. Нажмите на сердечко в углу карточки, чтобы добавить событие сюда.'
-          : 'Мероприятий в данной категории не найдено.';
-        calendarEl.innerHTML = `<div class="status-msg">${emptyMsg}</div>`;
+        container.innerHTML = `
+          <div class="empty-msg" style="grid-column: 1/-1;">
+            Мероприятий по выбранным параметрам не найдено.
+          </div>
+        `;
         return;
       }
 
-      calendarEl.innerHTML = `
-        <div class="events-grid">
-          ${filtered.map(event => {
-            const isFav = favorites.includes(event.id);
-            const imgSrc = typeImages[event.type] || typeImages.other;
-            return `
-              <div class="event-card">
-                <div class="event-image-wrapper">
-                  <img src="${imgSrc}" alt="${event.type}" class="event-image" loading="lazy" onerror="this.src='https://picsum.photos/id/1058/500/250'">
-                  <button class="fav-btn ${isFav ? 'is-fav' : ''}" onclick="toggleFavorite('${event.id}')" title="Избранное">
-                    <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
-                  </button>
+      container.innerHTML = filtered.map(event => {
+        const isFav = favorites.includes(event.id);
+        const iconClass = icons[event.type] || 'fa-trophy';
+        const formattedDate = event.date.split('-').reverse().join('.');
+
+        return `
+          <div class="event-card">
+            <div class="card-banner banner-${event.type}">
+              <i class="fa-solid ${iconClass}"></i>
+              <button class="fav-btn ${isFav ? 'is-fav' : ''}" onclick="toggleFavorite('${event.id}')">
+                <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+              </button>
+            </div>
+            <div class="card-body">
+              <div>
+                <div class="card-header">
+                  <span class="event-date-badge">${formattedDate}</span>
                 </div>
-                <div class="event-content">
-                  <div>
-                    <div class="event-header">
-                      <span class="event-date">${event.date}</span>
-                      <i class="fa-solid ${sportsIcons[event.type] || 'fa-trophy'} event-type-icon"></i>
-                    </div>
-                    <div class="event-title">${event.title}</div>
-                    <div class="event-location">
-                      <i class="fa-solid fa-location-dot"></i> ${event.location}
-                    </div>
-                  </div>
-                  <a href="${event.link}" target="_blank" class="event-link">Регистрация</a>
-                </div>
+                <div class="event-title" style="margin-top: 8px;">${event.title}</div>
               </div>
-            `;
-          }).join('')}
-        </div>
-      `;
+              <div class="event-location">
+                <i class="fa-solid fa-location-dot"></i> ${event.location}
+              </div>
+              <a href="${event.link}" target="_blank" class="register-btn">Регистрация</a>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
-    document.getElementById('filters').addEventListener('click', (e) => {
+    // Обработчик переключения фильтров
+    document.getElementById('sport-filters').addEventListener('click', (e) => {
       const btn = e.target.closest('.filter-btn');
       if (!btn) return;
 
@@ -485,11 +583,10 @@
       btn.classList.add('active');
 
       currentFilter = btn.dataset.type;
-      renderCalendar();
+      renderEvents();
     });
 
-    fetchCalendarEvents();
+    init();
   </script>
 </body>
 </html>
-
