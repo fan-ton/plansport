@@ -7,15 +7,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg-color: #f4f6f9;
+      --bg-color: #f1f5f9;
       --card-bg: #ffffff;
-      --text-main: #1e293b;
+      --text-main: #0f172a;
       --text-muted: #64748b;
-      --primary: #10b981;
-      --primary-hover: #059669;
-      --border-color: #e2e8f0;
-      --heart-color: #ef4444;
-      --brand-blue: #2563eb;
+      --brand-blue: #1a56db;
+      --brand-blue-hover: #1e40af;
+      --brand-red: #e11d48;
+      --brand-red-hover: #be123c;
+      --border-color: #cbd5e1;
     }
 
     * {
@@ -34,10 +34,10 @@
 
     header {
       max-width: 1200px;
-      margin: 0 auto 24px auto;
+      margin: 0 auto 20px auto;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
     .header-title {
@@ -48,11 +48,11 @@
       padding: 16px 20px;
       border-radius: 12px;
       border: 1px solid var(--border-color);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
     }
 
     .header-title i {
-      color: var(--primary);
+      color: var(--brand-red);
       font-size: 2rem;
     }
 
@@ -60,11 +60,11 @@
       font-size: 1.5rem;
       font-weight: 800;
       letter-spacing: -0.3px;
-      color: #0f172a;
+      color: var(--brand-blue);
       text-transform: uppercase;
     }
 
-    /* Навигация и фильтры в стиле O-Time */
+    /* Навигация и фильтры O-Time (Синий + Красный) */
     .filters {
       display: flex;
       flex-wrap: wrap;
@@ -73,7 +73,7 @@
       padding: 10px;
       border-radius: 12px;
       border: 1px solid var(--border-color);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
     }
 
     .filter-btn {
@@ -88,31 +88,31 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
     }
 
     .filter-btn:hover {
-      color: var(--text-main);
-      background: #f1f5f9;
+      color: var(--brand-blue);
+      border-color: var(--brand-blue);
     }
 
     .filter-btn.active {
-      background-color: var(--primary);
+      background-color: var(--brand-blue);
       color: #ffffff;
-      border-color: var(--primary);
+      border-color: var(--brand-blue);
     }
 
     .filter-btn.favorites-tab {
       margin-left: auto;
       border-color: #fca5a5;
-      color: var(--heart-color);
-      background: #fff5f5;
+      color: var(--brand-red);
+      background: #fff1f2;
     }
 
     .filter-btn.favorites-tab.active {
-      background-color: var(--heart-color);
+      background-color: var(--brand-red);
       color: #ffffff;
-      border-color: var(--heart-color);
+      border-color: var(--brand-red);
     }
 
     .fav-badge {
@@ -122,7 +122,6 @@
       font-size: 0.75rem;
     }
 
-    /* Сетка мероприятий */
     .calendar-container {
       max-width: 1200px;
       margin: 0 auto;
@@ -134,7 +133,6 @@
       gap: 16px;
     }
 
-    /* Оригинальный стиль карточки O-Time */
     .event-card {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -144,20 +142,20 @@
       flex-direction: column;
       justify-content: space-between;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
     }
 
     .event-card:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-      border-color: #cbd5e1;
+      border-color: var(--brand-blue);
     }
 
-    /* Компактная картинка соревнований */
+    /* Надежный контейнер изображений */
     .event-image-wrapper {
       position: relative;
       width: 100%;
-      height: 120px;
+      height: 125px;
       background-color: #e2e8f0;
       overflow: hidden;
     }
@@ -166,6 +164,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
 
     /* Кнопка "Сердечко" Избранное */
@@ -173,11 +172,11 @@
       position: absolute;
       top: 8px;
       right: 8px;
-      background: rgba(255, 255, 255, 0.9);
-      border: none;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid #e2e8f0;
       color: #94a3b8;
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -194,7 +193,8 @@
     }
 
     .fav-btn.is-fav {
-      color: var(--heart-color);
+      color: var(--brand-red);
+      background: #ffffff;
     }
 
     .event-content {
@@ -213,9 +213,9 @@
     }
 
     .event-date {
-      background: #ecfdf5;
-      color: #047857;
-      border: 1px solid #a7f3d0;
+      background: #eff6ff;
+      color: var(--brand-blue);
+      border: 1px solid #bfdbfe;
       font-weight: 700;
       font-size: 0.8rem;
       padding: 3px 8px;
@@ -223,7 +223,7 @@
     }
 
     .event-type-icon {
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: var(--text-muted);
     }
 
@@ -232,7 +232,7 @@
       font-weight: 700;
       line-height: 1.35;
       margin-bottom: 8px;
-      color: #0f172a;
+      color: var(--text-main);
     }
 
     .event-location {
@@ -244,22 +244,22 @@
       margin-bottom: 14px;
     }
 
-    /* Кнопка в фирменном стиле O-Time */
+    /* Фирменная красная кнопка O-Time */
     .event-link {
       display: block;
       text-align: center;
-      background-color: var(--primary);
+      background-color: var(--brand-red);
       color: #ffffff;
-      padding: 8px 12px;
+      padding: 9px 12px;
       border-radius: 6px;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.85rem;
       transition: background-color 0.2s ease;
     }
 
     .event-link:hover {
-      background-color: var(--primary-hover);
+      background-color: var(--brand-red-hover);
     }
 
     .status-msg {
@@ -311,16 +311,15 @@
   </main>
 
   <script>
-    // Подходящие компактные фото для видов спорта
+    // Быстрые картинки
     const typeImages = {
-      run: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?auto=format&fit=crop&w=500&q=80',
-      ski: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=500&q=80',
-      swim: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=500&q=80',
-      bike: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=500&q=80',
-      other: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=500&q=80'
+      run: 'https://picsum.photos/id/73/500/250',
+      ski: 'https://picsum.photos/id/1036/500/250',
+      swim: 'https://picsum.photos/id/124/500/250',
+      bike: 'https://picsum.photos/id/146/500/250',
+      other: 'https://picsum.photos/id/1058/500/250'
     };
 
-    // Базовые старт-данные
     const mockEvents = [
       { id: 'otime_1', title: "Марафон «Европа-Азия»", date: "15.08.2026", location: "Екатеринбург", type: "run", link: "https://reg.o-time.ru/calendar" },
       { id: 'otime_2', title: "Лесной трейл «Небо Славян»", date: "20.08.2026", location: "Ленинградская обл.", type: "run", link: "https://reg.o-time.ru/calendar" },
@@ -342,7 +341,6 @@
       other: 'fa-trophy'
     };
 
-    // Сортировка дат DD.MM.YYYY
     function parseEventDate(dateStr) {
       if (!dateStr || dateStr === 'Скоро') return new Date(2099, 11, 31);
       const parts = dateStr.split('.');
@@ -356,11 +354,14 @@
       const targetUrl = 'https://reg.o-time.ru/calendar';
       const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
 
+      // Быстрый таймаут 2.5с на случай задержек прокси
+      const fetchPromise = fetch(proxyUrl).then(res => res.json());
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Таймаут сетевого запроса')), 2500)
+      );
+
       try {
-        const response = await fetch(proxyUrl);
-        if (!response.ok) throw new Error('Ошибка сети');
-        const data = await response.json();
-        
+        const data = await Promise.race([fetchPromise, timeoutPromise]);
         const parser = new DOMParser();
         const doc = parser.parseFromString(data.contents, 'text/html');
         const eventRows = doc.querySelectorAll('table tr, .event-row, .calendar-item');
@@ -393,6 +394,7 @@
 
         allEvents = parsedEvents.length > 0 ? parsedEvents : mockEvents;
       } catch (err) {
+        // Мгновенный фоллбэк при зависании
         allEvents = mockEvents;
       }
 
@@ -425,7 +427,6 @@
       let filtered = [];
 
       if (currentFilter === 'favorites') {
-        // Выборка избранных и сортировка по дате проведения
         filtered = allEvents
           .filter(e => favorites.includes(e.id))
           .sort((a, b) => parseEventDate(a.date) - parseEventDate(b.date));
@@ -451,7 +452,7 @@
             return `
               <div class="event-card">
                 <div class="event-image-wrapper">
-                  <img src="${imgSrc}" alt="${event.type}" class="event-image" loading="lazy">
+                  <img src="${imgSrc}" alt="${event.type}" class="event-image" loading="lazy" onerror="this.src='https://picsum.photos/id/1058/500/250'">
                   <button class="fav-btn ${isFav ? 'is-fav' : ''}" onclick="toggleFavorite('${event.id}')" title="Избранное">
                     <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
                   </button>
@@ -491,3 +492,4 @@
   </script>
 </body>
 </html>
+
