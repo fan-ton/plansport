@@ -1,22 +1,23 @@
+// База соревнований Russia Running
 var eventsData = [
-  { id: 'ev1', title: 'Марафон «Европа-Азия»', date: '2026-08-15', location: 'Екатеринбург', type: 'run', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
-  { id: 'ev2', title: 'Лесной трейл «Небо Славян»', date: '2026-08-20', location: 'Ленинградская обл.', type: 'run', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
-  { id: 'ev3', title: 'Ночной забег O-Time', date: '2026-08-20', location: 'Санкт-Петербург', type: 'run', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
-  { id: 'ev4', title: 'Полумарафон «Лужники»', date: '2026-08-23', location: 'Москва', type: 'run', source: 'Russia Running', link: 'https://russiarunning.com' },
-  { id: 'ev5', title: 'Открытый заплыв Lake Swim', date: '2026-08-23', location: 'Озеро Хепоярви', type: 'swim', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
-  { id: 'ev6', title: 'Шоссейная велогонка Gran Fondo', date: '2026-08-28', location: 'Москва', type: 'bike', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
-  { id: 'ev7', title: 'Лыжероллерный спринт', date: '2026-08-30', location: 'Кавголово', type: 'ski', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
-  { id: 'ev8', title: 'Московский Марафон', date: '2026-09-06', location: 'Москва', type: 'run', source: 'Russia Running', link: 'https://russiarunning.com' },
-  { id: 'ev9', title: 'Павловский полумарафон', date: '2026-09-13', location: 'Санкт-Петербург', type: 'run', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
-  { id: 'ev10', title: 'Заплыв Swimcup Volga', date: '2026-09-20', location: 'Нижний Новгород', type: 'swim', source: 'Russia Running', link: 'https://russiarunning.com' },
-  { id: 'ev11', title: 'Осенний трейл «Северная Тропа»', date: '2026-10-04', location: 'Токсово', type: 'run', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
-  { id: 'ev12', title: 'Кросс Наций', date: '2026-10-11', location: 'Сочи', type: 'run', source: 'Russia Running', link: 'https://russiarunning.com' }
+  // Беговые события
+  { id: 'rr_1', title: 'Полумарафон «Лужники»', date: '2026-08-23', location: 'Москва', type: 'run', source: 'Russia Running', link: 'https://russiarunning.com' },
+  { id: 'rr_2', title: 'Ночной забег', date: '2026-08-29', location: 'Москва', type: 'run', source: 'Russia Running', link: 'https://russiarunning.com' },
+  { id: 'rr_3', title: 'Московский Марафон', date: '2026-09-20', location: 'Москва', type: 'run', source: 'Russia Running', link: 'https://russiarunning.com' },
+  { id: 'rr_4', title: 'Полумарафон «Моя столица»', date: '2026-10-04', location: 'Москва, Воробьевы горы', type: 'run', source: 'Russia Running', link: 'https://russiarunning.com' },
+  { id: 'rr_5', title: 'Сочинский Марафон', date: '2026-11-01', location: 'Сочи', type: 'run', source: 'Russia Running', link: 'https://russiarunning.com' },
+  
+  // Трейл, плавание, лыжи, вело
+  { id: 'rr_6', title: 'Заплыв Swimcup Volga', date: '2026-08-30', location: 'Нижний Новгород', type: 'swim', source: 'Russia Running', link: 'https://russiarunning.com' },
+  { id: 'rr_7', title: 'Велогонка Gran Fondo Russia', date: '2026-09-13', location: 'Подмосковье', type: 'bike', source: 'Russia Running', link: 'https://russiarunning.com' },
+  { id: 'rr_8', title: 'Осенний кросс-трейл «Лисьи горы»', date: '2026-10-18', location: 'Битцевский лес', type: 'run', source: 'Russia Running', link: 'https://russiarunning.com' },
+  { id: 'rr_9', title: 'Лыжный марафон «Европа-Азия»', date: '2026-12-13', location: 'Екатеринбург', type: 'ski', source: 'Russia Running', link: 'https://russiarunning.com' }
 ];
 
-var favorites = JSON.parse(localStorage.getItem('otime_favs') || '[]');
+var favorites = JSON.parse(localStorage.getItem('rr_favs') || '[]');
 var currentFilter = 'all';
 var selectedDate = null;
-var currentCalMonth = 7; 
+var currentCalMonth = 7; // Август (0-индекс)
 var currentCalYear = 2026;
 
 var monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
@@ -124,7 +125,7 @@ function toggleFavorite(id) {
   } else {
     favorites.push(id);
   }
-  localStorage.setItem('otime_favs', JSON.stringify(favorites));
+  localStorage.setItem('rr_favs', JSON.stringify(favorites));
   updateFavBadge();
   renderEvents();
 }
@@ -153,7 +154,7 @@ function renderEvents() {
   filtered.sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
 
   if (filtered.length === 0) {
-    container.innerHTML = '<div class="empty-msg" style="grid-column: 1/-1;">Мероприятий по выбранным параметрам не найдено.</div>';
+    container.innerHTML = '<div class="empty-msg" style="grid-column: 1/-1;">Стартов по выбранным параметрам не найдено.</div>';
     return;
   }
 
@@ -182,7 +183,7 @@ function renderEvents() {
                 '<div class="event-location">' +
                   '<i class="fa-solid fa-location-dot"></i> ' + event.location +
                 '</div>' +
-                '<a href="' + event.link + '" target="_blank" class="register-btn">Регистрация</a>' +
+                '<a href="' + event.link + '" target="_blank" class="register-btn">Зарегистрироваться</a>' +
               '</div>' +
             '</div>';
   }
@@ -212,4 +213,4 @@ document.addEventListener('DOMContentLoaded', function() {
   renderCalendarGrid();
   renderEvents();
 });
-
+        
