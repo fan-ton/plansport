@@ -86,7 +86,7 @@
 
     .logo i { color: var(--accent); }
 
-    /* Выдвижной календарь */
+    /* Оверлей и выдвижное меню */
     .sidebar-overlay {
       position: fixed;
       top: 0;
@@ -138,22 +138,25 @@
       cursor: pointer;
     }
 
-    /* Навигация по месяцам */
+    /* Календарь */
     .month-nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .month-nav-btn {
       background: var(--border-color);
       border: none;
       color: var(--text-primary);
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       border-radius: 6px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .month-title { font-weight: 700; font-size: 0.95rem; color: var(--text-secondary); }
@@ -201,7 +204,7 @@
       background: var(--border-color);
       border: none;
       color: var(--text-primary);
-      padding: 8px;
+      padding: 10px;
       border-radius: 8px;
       cursor: pointer;
       font-weight: 600;
@@ -249,7 +252,7 @@
       font-size: 0.88rem;
     }
 
-    /* Карточки */
+    /* Сетка и Карточки */
     .events-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -427,37 +430,30 @@
   </div>
 
   <script>
-    // Объединенная база стартов O-Time и Russia Running на несколько месяцев
-    const eventsData = [
-      // Август 2026
-      { id: 'ev1', title: "Марафон «Европа-Азия»", date: "2026-08-15", location: "Екатеринбург", type: "run", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
-      { id: 'ev2', title: "Лесной трейл «Небо Славян»", date: "2026-08-20", location: "Ленинградская обл.", type: "run", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
-      { id: 'ev3', title: "Ночной забег O-Time", date: "2026-08-20", location: "Санкт-Петербург", type: "run", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
-      { id: 'ev4', title: "Полумарафон «Лужники»", date: "2026-08-23", location: "Москва", type: "run", source: "Russia Running", link: "https://russiarunning.com" },
-      { id: 'ev5', title: "Открытый заплыв Lake Swim", date: "2026-08-23", location: "Озеро Хепоярви", type: "swim", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
-      { id: 'ev6', title: "Шоссейная велогонка Gran Fondo", date: "2026-08-28", location: "Москва", type: "bike", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
-      { id: 'ev7', title: "Лыжероллерный спринт", date: "2026-08-30", location: "Кавголово", type: "ski", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
-
-      // Сентябрь 2026
-      { id: 'ev8', title: "Московский Марафон", date: "2026-09-06", location: "Москва", type: "run", source: "Russia Running", link: "https://russiarunning.com" },
-      { id: 'ev9', title: "Павловский полумарафон", date: "2026-09-13", location: "Санкт-Петербург", type: "run", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
-      { id: 'ev10', title: "Заплыв Swimcup Volga", date: "2026-09-20", location: "Нижний Новгород", type: "swim", source: "Russia Running", link: "https://russiarunning.com" },
-
-      // Октябрь 2026
-      { id: 'ev11', title: "Осенний трейл «Северная Тропа»", date: "2026-10-04", location: "Токсово", type: "run", source: "O-Time", link: "https://reg.o-time.ru/calendar" },
-      { id: 'ev12', title: "Кросс Наций", date: "2026-10-11", location: "Сочи", type: "run", source: "Russia Running", link: "https://russiarunning.com" }
+    var eventsData = [
+      { id: 'ev1', title: 'Марафон «Европа-Азия»', date: '2026-08-15', location: 'Екатеринбург', type: 'run', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
+      { id: 'ev2', title: 'Лесной трейл «Небо Славян»', date: '2026-08-20', location: 'Ленинградская обл.', type: 'run', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
+      { id: 'ev3', title: 'Ночной забег O-Time', date: '2026-08-20', location: 'Санкт-Петербург', type: 'run', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
+      { id: 'ev4', title: 'Полумарафон «Лужники»', date: '2026-08-23', location: 'Москва', type: 'run', source: 'Russia Running', link: 'https://russiarunning.com' },
+      { id: 'ev5', title: 'Открытый заплыв Lake Swim', date: '2026-08-23', location: 'Озеро Хепоярви', type: 'swim', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
+      { id: 'ev6', title: 'Шоссейная велогонка Gran Fondo', date: '2026-08-28', location: 'Москва', type: 'bike', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
+      { id: 'ev7', title: 'Лыжероллерный спринт', date: '2026-08-30', location: 'Кавголово', type: 'ski', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
+      { id: 'ev8', title: 'Московский Марафон', date: '2026-09-06', location: 'Москва', type: 'run', source: 'Russia Running', link: 'https://russiarunning.com' },
+      { id: 'ev9', title: 'Павловский полумарафон', date: '2026-09-13', location: 'Санкт-Петербург', type: 'run', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
+      { id: 'ev10', title: 'Заплыв Swimcup Volga', date: '2026-09-20', location: 'Нижний Новгород', type: 'swim', source: 'Russia Running', link: 'https://russiarunning.com' },
+      { id: 'ev11', title: 'Осенний трейл «Северная Тропа»', date: '2026-10-04', location: 'Токсово', type: 'run', source: 'O-Time', link: 'https://reg.o-time.ru/calendar' },
+      { id: 'ev12', title: 'Кросс Наций', date: '2026-10-11', location: 'Сочи', type: 'run', source: 'Russia Running', link: 'https://russiarunning.com' }
     ];
 
-    let favorites = JSON.parse(localStorage.getItem('otime_favs') || '[]');
-    let currentFilter = 'all';
-    let selectedDate = null;
+    var favorites = JSON.parse(localStorage.getItem('otime_favs') || '[]');
+    var currentFilter = 'all';
+    var selectedDate = null;
+    var currentCalMonth = 7; // Август (0-индекс)
+    var currentCalYear = 2026;
 
-    let currentCalMonth = 7; // Август (0-index)
-    let currentCalYear = 2026;
+    var monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
 
-    const monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
-
-    const icons = {
+    var icons = {
       run: 'fa-person-running',
       ski: 'fa-person-skiing',
       swim: 'fa-person-swimming',
@@ -488,40 +484,45 @@
     }
 
     function renderCalendarGrid() {
-      const grid = document.getElementById('calendar-grid');
-      const titleEl = document.getElementById('month-title');
-      if (!grid) return;
+      var grid = document.getElementById('calendar-grid');
+      var titleEl = document.getElementById('month-title');
+      if (!grid || !titleEl) return;
 
-      titleEl.textContent = `${monthNames[currentCalMonth]} ${currentCalYear}`;
+      titleEl.textContent = monthNames[currentCalMonth] + " " + currentCalYear;
 
-      const daysNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-      let html = daysNames.map(d => `<div class="cal-day-name">${d}</div>`).join('');
-
-      const firstDay = new Date(currentCalYear, currentCalMonth, 1).getDay();
-      const emptySlots = (firstDay === 0 ? 6 : firstDay - 1);
-      const daysInMonth = new Date(currentCalYear, currentCalMonth + 1, 0).getDate();
-
-      for (let i = 0; i < emptySlots; i++) {
-        html += `<div class="cal-date empty"></div>`;
+      var daysNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+      var html = "";
+      
+      for (var d = 0; d < daysNames.length; d++) {
+        html += '<div class="cal-day-name">' + daysNames[d] + '</div>';
       }
 
-      for (let day = 1; day <= daysInMonth; day++) {
-        const mStr = (currentCalMonth + 1) < 10 ? '0' + (currentCalMonth + 1) : (currentCalMonth + 1);
-        const dStr = day < 10 ? '0' + day : day;
-        const dateStr = `${currentCalYear}-${mStr}-${dStr}`;
+      var firstDay = new Date(currentCalYear, currentCalMonth, 1).getDay();
+      var emptySlots = (firstDay === 0 ? 6 : firstDay - 1);
+      var daysInMonth = new Date(currentCalYear, currentCalMonth + 1, 0).getDate();
 
-        const dayEvents = eventsData.filter(e => e.date === dateStr);
-        const hasEvents = dayEvents.length > 0;
-        const isSelected = selectedDate === dateStr;
+      for (var i = 0; i < emptySlots; i++) {
+        html += '<div class="cal-date empty"></div>';
+      }
 
-        html += `
-          <div class="cal-date ${hasEvents ? 'has-events' : ''} ${isSelected ? 'selected' : ''}" onclick="selectDate('${dateStr}')">
-            <span>${day}</span>
-            <div class="event-dots">
-              ${dayEvents.map(() => `<div class="event-dot"></div>`).join('')}
-            </div>
-          </div>
-        `;
+      for (var day = 1; day <= daysInMonth; day++) {
+        var mStr = (currentCalMonth + 1) < 10 ? '0' + (currentCalMonth + 1) : (currentCalMonth + 1);
+        var dStr = day < 10 ? '0' + day : day;
+        var dateStr = currentCalYear + '-' + mStr + '-' + dStr;
+
+        var dayEvents = eventsData.filter(function(e) { return e.date === dateStr; });
+        var hasEvents = dayEvents.length > 0;
+        var isSelected = selectedDate === dateStr;
+
+        var dotsHtml = "";
+        for (var k = 0; k < dayEvents.length; k++) {
+          dotsHtml += '<div class="event-dot"></div>';
+        }
+
+        html += '<div class="cal-date ' + (hasEvents ? 'has-events' : '') + ' ' + (isSelected ? 'selected' : '') + '" onclick="selectDate(\'' + dateStr + '\')">' +
+                '<span>' + day + '</span>' +
+                '<div class="event-dots">' + dotsHtml + '</div>' +
+                '</div>';
       }
 
       grid.innerHTML = html;
@@ -550,8 +551,8 @@
     }
 
     function toggleFavorite(id) {
-      if (favorites.includes(id)) {
-        favorites = favorites.filter(favId => favId !== id);
+      if (favorites.indexOf(id) !== -1) {
+        favorites = favorites.filter(function(favId) { return favId !== id; });
       } else {
         favorites.push(id);
       }
@@ -561,66 +562,51 @@
     }
 
     function updateFavBadge() {
-      const el = document.getElementById('fav-count');
+      var el = document.getElementById('fav-count');
       if (el) el.textContent = favorites.length;
     }
 
     function renderEvents() {
-      const container = document.getElementById('events-grid');
+      var container = document.getElementById('events-grid');
       if (!container) return;
 
-      let filtered = [...eventsData];
+      var filtered = eventsData.slice();
 
       if (currentFilter === 'favorites') {
-        filtered = filtered.filter(e => favorites.includes(e.id));
+        filtered = filtered.filter(function(e) { return favorites.indexOf(e.id) !== -1; });
       } else if (currentFilter !== 'all') {
-        filtered = filtered.filter(e => e.type === currentFilter);
+        filtered = filtered.filter(function(e) { return e.type === currentFilter; });
       }
 
       if (selectedDate) {
-        filtered = filtered.filter(e => e.date === selectedDate);
+        filtered = filtered.filter(function(e) { return e.date === selectedDate; });
       }
 
-      filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+      filtered.sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
 
       if (filtered.length === 0) {
-        container.innerHTML = `
-          <div class="empty-msg" style="grid-column: 1/-1;">
-            Мероприятий по выбранным параметрам не найдено.
-          </div>
-        `;
+        container.innerHTML = '<div class="empty-msg" style="grid-column: 1/-1;">Мероприятий по выбранным параметрам не найдено.</div>';
         return;
       }
 
-      container.innerHTML = filtered.map(event => {
-        const isFav = favorites.includes(event.id);
-        const iconClass = icons[event.type] || 'fa-trophy';
-        const formattedDate = event.date.split('-').reverse().join('.');
+      var html = "";
+      for (var i = 0; i < filtered.length; i++) {
+        var event = filtered[i];
+        var isFav = favorites.indexOf(event.id) !== -1;
+        var iconClass = icons[event.type] || 'fa-trophy';
+        var formattedDate = event.date.split('-').reverse().join('.');
 
-        return `
-          <div class="event-card">
-            <div class="card-banner banner-${event.type}">
-              <i class="fa-solid ${iconClass}"></i>
-              <button class="fav-btn ${isFav ? 'is-fav' : ''}" onclick="toggleFavorite('${event.id}')">
-                <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
-              </button>
-            </div>
-            <div class="card-body">
-              <div>
-                <div class="card-meta">
-                  <span class="event-date-badge">${formattedDate}</span>
-                  <span class="event-source">${event.source}</span>
-                </div>
-                <div class="event-title">${event.title}</div>
-              </div>
-              <div class="event-location">
-                <i class="fa-solid fa-location-dot"></i> ${event.location}
-              </div>
-              <a href="${event.link}" target="_blank" class="register-btn">Регистрация</a>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    document.addEventListener('DOMContentLoaded',
+        html += '<div class="event-card">' +
+                  '<div class="card-banner banner-' + event.type + '">' +
+                    '<i class="fa-solid ' + iconClass + '"></i>' +
+                    '<button class="fav-btn ' + (isFav ? 'is-fav' : '') + '" onclick="toggleFavorite(\'' + event.id + '\')">' +
+                      '<i class="' + (isFav ? 'fa-solid' : 'fa-regular') + ' fa-heart"></i>' +
+                    '</button>' +
+                  '</div>' +
+                  '<div class="card-body">' +
+                    '<div>' +
+                      '<div class="card-meta">' +
+                        '<span class="event-date-badge">' + formattedDate + '</span>' +
+                        '<span class="event-source">' + event.source + '</span>' +
+                      '</div>' +
+                      '<div class="event-title">' + 
